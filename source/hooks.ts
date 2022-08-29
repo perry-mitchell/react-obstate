@@ -23,12 +23,20 @@ export function useSingleState<T extends State, K extends keyof T>(
     return [currentValue, setNewValue];
 }
 
-export function useState<T extends State>(state: T) {
+export function useState<T extends State>(state: T): [T, (partialState: Partial<T>) => void, (fullState: T) => void] {
     const initialState = useMemo(() => ({ ...state }), []);
     const [currentState, setNewState] = useReactState(initialState);
     const setPartialState = useCallback((stateUpdate: Partial<T>) => {
         Object.assign(state, stateUpdate);
     }, [state]);
+    const setFullState = useCallback((stateUpdate: T) => {
+        Object.assign(state, stateUpdate);
+        for (const key in currentState) {
+            if (!(key in stateUpdate)) {
+                delete state[key];
+            }
+        }
+    }, [currentState]);
     useEffect(() => {
         const onChange = () => {
             // Easiest to just update the entire state object here
@@ -41,5 +49,5 @@ export function useState<T extends State>(state: T) {
             state.off("update", onChange);
         };
     }, [state]);
-    return [currentState, setPartialState];
+    return [currentState, setPartialState, setFullState];
 }
