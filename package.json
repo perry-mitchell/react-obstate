@@ -8,13 +8,25 @@
   "scripts": {
     "build": "npm run clean && tsc",
     "clean": "rimraf dist",
+    "format": "prettier --write \"{source,test}/**/*.{js,ts}\"",
     "prepublishOnly": "npm run build",
-    "test": "npm run test:specs",
+    "test": "npm run test:specs && npm run test:format",
+    "test:format": "prettier --check \"{source,test}/**/*.{js,ts}\"",
     "test:specs": "npm run build && mocha --require global-jsdom/register \"test/**/*.spec.js\""
   },
   "files": [
     "dist/**/*"
   ],
+  "lint-staged": {
+    "{source,test}/**/*.{js,ts}": [
+      "prettier --write"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/perry-mitchell/react-obstate.git"
@@ -43,9 +55,12 @@
     "@types/react-dom": "^18.0.6",
     "chai": "^4.3.6",
     "global-jsdom": "^8.5.0",
+    "husky": "^4.3.8",
     "jsdom": "^20.0.0",
+    "lint-staged": "^13.0.3",
     "mocha": "^10.0.0",
     "obstate": "^0.1.2",
+    "prettier": "^2.7.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rimraf": "^3.0.2",
