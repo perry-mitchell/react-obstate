@@ -6,9 +6,12 @@ export function useSingleState<T extends State, K extends keyof T>(
     property: K
 ): [T[K], (newValue: T[K]) => void] {
     const [currentValue, setCurrentValue] = useReactState(state[property]);
-    const setNewValue = useCallback((newValue: T[K]) => {
-        state[property] = newValue;
-    }, [state]);
+    const setNewValue = useCallback(
+        (newValue: T[K]) => {
+            state[property] = newValue;
+        },
+        [state]
+    );
     useEffect(() => {
         const onChange = ({ property: updatedProperty, newValue }) => {
             if (updatedProperty === property) {
@@ -23,20 +26,28 @@ export function useSingleState<T extends State, K extends keyof T>(
     return [currentValue, setNewValue];
 }
 
-export function useState<T extends State>(state: T): [T, (partialState: Partial<T>) => void, (fullState: T) => void] {
+export function useState<T extends State>(
+    state: T
+): [T, (partialState: Partial<T>) => void, (fullState: T) => void] {
     const initialState = useMemo(() => ({ ...state }), []);
     const [currentState, setNewState] = useReactState(initialState);
-    const setPartialState = useCallback((stateUpdate: Partial<T>) => {
-        Object.assign(state, stateUpdate);
-    }, [state]);
-    const setFullState = useCallback((stateUpdate: T) => {
-        Object.assign(state, stateUpdate);
-        for (const key in currentState) {
-            if (!(key in stateUpdate)) {
-                delete state[key];
+    const setPartialState = useCallback(
+        (stateUpdate: Partial<T>) => {
+            Object.assign(state, stateUpdate);
+        },
+        [state]
+    );
+    const setFullState = useCallback(
+        (stateUpdate: T) => {
+            Object.assign(state, stateUpdate);
+            for (const key in currentState) {
+                if (!(key in stateUpdate)) {
+                    delete state[key];
+                }
             }
-        }
-    }, [currentState]);
+        },
+        [currentState]
+    );
     useEffect(() => {
         const onChange = () => {
             // Easiest to just update the entire state object here

@@ -3,20 +3,20 @@ import { expect } from "chai";
 import { createStateObject } from "obstate";
 import { useSingleState, useState } from "../dist/hooks.js";
 
-describe("hooks", function() {
+describe("hooks", function () {
     const INITIAL_STATE = {
         value: 123,
         test: true
     };
 
-    beforeEach(function() {
+    beforeEach(function () {
         this.state = createStateObject({
             ...INITIAL_STATE
         });
     });
 
-    describe("useSingleState", function() {
-        beforeEach(function() {
+    describe("useSingleState", function () {
+        beforeEach(function () {
             this.hook = null;
         });
 
@@ -26,19 +26,19 @@ describe("hooks", function() {
             });
         }
 
-        it("returns state value", async function() {
+        it("returns state value", async function () {
             await renderSingle.call(this);
             expect(this.hook.result.current[0]).to.equal(123);
         });
 
-        it("updates value for state change", async function() {
+        it("updates value for state change", async function () {
             await renderSingle.call(this);
             this.state.value *= 2;
             await renderSingle.call(this);
             expect(this.hook.result.current[0]).to.equal(246);
         });
 
-        it("returns update function", async function() {
+        it("returns update function", async function () {
             await renderSingle.call(this);
             const updateState = this.hook.result.current[1];
             expect(updateState).to.be.a("function");
@@ -48,8 +48,8 @@ describe("hooks", function() {
         });
     });
 
-    describe("useState", function() {
-        beforeEach(function() {
+    describe("useState", function () {
+        beforeEach(function () {
             this.hook = null;
         });
 
@@ -59,12 +59,12 @@ describe("hooks", function() {
             });
         }
 
-        it("returns full state object", async function() {
+        it("returns full state object", async function () {
             await renderFull.call(this);
             expect(this.hook.result.current[0]).to.deep.equal(INITIAL_STATE);
         });
 
-        it("returns partial-update function", async function() {
+        it("returns partial-update function", async function () {
             await renderFull.call(this);
             const updateState = this.hook.result.current[1];
             expect(updateState).to.be.a("function");
@@ -78,7 +78,7 @@ describe("hooks", function() {
             });
         });
 
-        it("returns full-update function", async function() {
+        it("returns full-update function", async function () {
             await renderFull.call(this);
             const updateState = this.hook.result.current[2];
             expect(updateState).to.be.a("function");
