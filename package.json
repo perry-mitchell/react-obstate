@@ -1,0 +1,48 @@
+{
+  "name": "react-obstate",
+  "version": "0.0.0",
+  "description": "React hooks for the generic object state management library",
+  "exports": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "clean": "rimraf dist",
+    "prepublishOnly": "npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/perry-mitchell/react-obstate.git"
+  },
+  "keywords": [
+    "react",
+    "state",
+    "management",
+    "obstate",
+    "object"
+  ],
+  "author": "Perry Mitchell <perry@perrymitchell.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/perry-mitchell/react-obstate/issues"
+  },
+  "homepage": "https://github.com/perry-mitchell/react-obstate#readme",
+  "peerDependencies": {
+    "obstate": "*",
+    "react": ">= 16"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.13",
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "obstate": "^0.1.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.8.2"
+  }
+}
