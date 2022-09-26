@@ -1,3 +1,3 @@
 import { EventEmitter, Events } from "obstate";
 
-export type State = Record<string, unknown> & EventEmitter<Events>;
+export type State = Record<string, any> & EventEmitter<Events>;
