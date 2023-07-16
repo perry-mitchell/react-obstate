@@ -1,5 +1,10 @@
 # React Obstate
 
+## v0.1.2
+_2023-07-16_
+
+ * Add react-native module path in `package.json`
+
 ## v0.1.1
 _2022-09-26_
 
