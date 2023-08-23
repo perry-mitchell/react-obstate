@@ -25,6 +25,9 @@ export function useSingleState<T extends State, K extends keyof T>(
                 setCurrentValue(newValue);
             }
         };
+        // Set property to avoid race condition where we miss it
+        setCurrentValue(state[property]);
+        // Listen for changes
         state.on("update", onChange);
         return () => {
             state.off("update", onChange);
@@ -70,6 +73,7 @@ export function useState<T extends State>(
                 ...state
             });
         };
+        onChange();
         state.on("update", onChange);
         return () => {
             state.off("update", onChange);
