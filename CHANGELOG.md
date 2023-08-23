@@ -1,5 +1,10 @@
 # React Obstate
 
+## v0.1.3
+_2023-08-23_
+
+ * Fix state race condition
+
 ## v0.1.2
 _2023-07-16_
 
